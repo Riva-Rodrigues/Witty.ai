@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import MarkdownComponent from "@/components/MarkdownComponent"
 
 const TeamMemberCard = ({ name, avatar, tasksCompleted, totalTasks }) => {
     const completionPercentage = (tasksCompleted / totalTasks) * 100
@@ -215,6 +216,7 @@ export default function Tasks() {
                     </div>
                 </div>
             )}
+            <MarkdownComponent />
         </div>
     )
 }

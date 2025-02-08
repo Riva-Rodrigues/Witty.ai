@@ -8,6 +8,7 @@ import Tasks from "./pages/Tasks";
 import Create from "./pages/Create";
 import CreateForm from "./pages/CreateForm";
 import TextEditor from "./components/TextEditor";
+import { useEffect } from "react";
 
 const App = () => {
     return (
@@ -20,7 +21,7 @@ const App = () => {
 
             {/* Private Nested Routes */}
             <Route path="/" element={<AppLayout />}>
-                <Route path="/dashboard" element={<div className="w-full">Dashboard</div>} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/add-tasks" element={<Tasks />} />
                 <Route path="/create" element={<Create />} />
                 <Route path="/create/:category" element={<CreateForm />} />
@@ -31,3 +32,16 @@ const App = () => {
 };
 
 export default App;
+
+
+const Dashboard = () => {
+    useEffect(() => {
+        window.location.href = "http://localhost:5175/dashboard";
+    }, []);
+
+    return (
+        <div className="w-full h-screen flex items-center justify-center">
+            Loading...
+        </div>
+    );
+};
