@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { PlusCircleIcon } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const ILSI_CLASSES = [
@@ -37,12 +35,6 @@ export default function Create() {
               </div>
           </div>
       </div>
-      <Link to="/custom-documents" className="absolute bottom-8 right-8" >
-        <Button className="flex justify-around items-center mx-2 p-6" >
-          <PlusCircleIcon className="w-4 h-4"  />
-          <div className="text-lg" >Custom Documents</div>
-        </Button>
-      </Link>
     </>
   )
 }

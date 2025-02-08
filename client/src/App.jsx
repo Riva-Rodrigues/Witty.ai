@@ -17,14 +17,14 @@ const App = () => {
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
             <Route path="/onboarding" element={<OnboardingPage />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/create" element={<Create />} />
-            <Route path="/create/:category" element={<CreateForm />} />
-            <Route path="/create/:category/text-editor" element={<TextEditor />} />
 
             {/* Private Nested Routes */}
             <Route path="/" element={<AppLayout />}>
                 <Route path="/dashboard" element={<div className="w-full">Dashboard</div>} />
+                <Route path="/add-tasks" element={<Tasks />} />
+                <Route path="/create" element={<Create />} />
+                <Route path="/create/:category" element={<CreateForm />} />
+                <Route path="/create/:category/text-editor" element={<TextEditor />} />
             </Route>
         </Routes>
     );
