@@ -1,0 +1,68 @@
+{
+    "Employee Completion Letter": {
+      "title": "Employee Completion Letter",
+      "description": "A formal document issued to employees upon successful completion of their employment period, confirming their tenure and performance.",
+      "fields": [
+        { "label": "Employee Name", "type": "text" },
+        { "label": "Employee ID", "type": "text" },
+        { "label": "Department", "type": "text" },
+        { "label": "Designation", "type": "text" },
+        { "label": "Date of Joining", "type": "date" },
+        { "label": "Last Working Date", "type": "date" },
+        { "label": "Reporting Manager", "type": "text" },
+        { "label": "Projects/Assignments Completed", "type": "text" },
+        { "label": "Performance Summary", "type": "text" },
+        { "label": "Reason for Separation", "type": "text" },
+        { "label": "HR Manager Name", "type": "text" },
+        { "label": "Letter Issue Date", "type": "date" },
+        { "label": "Company Name", "type": "text" },
+        { "label": "Company Address", "type": "text" }
+      ]
+    },
+    "Employee Offer Letter": {
+      "title": "Employee Offer Letter",
+      "description": "A formal employment offer document detailing the terms and conditions of employment, compensation, and other benefits.",
+      "fields": [
+        { "label": "Candidate Name", "type": "text" },
+        { "label": "Candidate Address", "type": "text" },
+        { "label": "Position Offered", "type": "text" },
+        { "label": "Department", "type": "text" },
+        { "label": "Reporting Manager", "type": "text" },
+        { "label": "Work Location", "type": "text" },
+        { "label": "Start Date", "type": "date" },
+        { "label": "Base Salary", "type": "number" },
+        { "label": "Variable Pay/Bonus", "type": "number" },
+        { "label": "Benefits Package", "type": "text" },
+        { "label": "Working Hours", "type": "text" },
+        { "label": "Probation Period", "type": "number", "placeholder": "in months" },
+        { "label": "Notice Period", "type": "number", "placeholder": "in days" },
+        { "label": "Special Terms & Conditions", "type": "text" },
+        { "label": "Offer Validity", "type": "number", "placeholder": "in days" },
+        { "label": "HR Manager Name", "type": "text" },
+        { "label": "Offer Issue Date", "type": "date" }
+      ]
+    },
+    "Meeting Room Booking": {
+      "title": "Meeting Room Booking",
+      "description": "A form to reserve meeting rooms and facilities for business meetings, presentations, or events.",
+      "fields": [
+        { "label": "Requester Name", "type": "text" },
+        { "label": "Requester Department", "type": "text" },
+        { "label": "Requester Email", "type": "text" },
+        { "label": "Meeting Room Name/Number", "type": "text" },
+        { "label": "Meeting Date", "type": "date" },
+        { "label": "Start Time", "type": "time" },
+        { "label": "End Time", "type": "time" },
+        { "label": "Number of Attendees", "type": "number" },
+        { "label": "Meeting Purpose", "type": "text" },
+        { "label": "Required Equipment", "type": "text", "placeholder": "Projector, Video Conference, etc." },
+        { "label": "Catering Required", "type": "boolean" },
+        { "label": "Catering Details", "type": "text", "conditional": "Catering Required" },
+        { "label": "Additional Setup Instructions", "type": "text" },
+        { "label": "Recurring Meeting", "type": "boolean" },
+        { "label": "Recurrence Pattern", "type": "text", "conditional": "Recurring Meeting" },
+        { "label": "External Participants", "type": "boolean" },
+        { "label": "Security Clearance Required", "type": "boolean", "conditional": "External Participants" }
+      ]
+    }
+  }

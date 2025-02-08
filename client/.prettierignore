@@ -1,0 +1,46 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+*.html
+
+# Ignore node_modules:
+node_modules
+
+# Ignore dist folder:
+dist
+
+# Ignore all JSON files:
+*.json
+
+# Ignore all log files:
+*.log
+
+# Ignore all markdown files:
+*.md
+
+# Ignore all CSS files:
+*.css
+
+# Ignore all YAML files:
+*.yml
+*.yaml
+
+# Ignore all environment files:
+.env*
+
+# Ignore all lock files:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore all test files:
+**/*.test.js
+**/*.spec.js
+
+# Ignore all configuration files:
+.eslintrc*
+.prettierrc*
+tsconfig.json
+vite.config.js
