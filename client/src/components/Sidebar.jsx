@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Home, Send, Archive, GraduationCap, CirclePlus, FileCode2 } from "lucide-react";
+import { Menu, Home, Send, Archive, GraduationCap, CirclePlus, FileCode2, Mail } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { ModeToggle } from "./ModeToggle";
@@ -13,7 +13,7 @@ const navItems = [
   { name: "Home", href: "/dashboard", icon: Home },
   { name: "Add Tasks", href: "/add-tasks", icon: CirclePlus },
   { name: "Create Docs", href: "/create", icon: FileCode2 },
-  { name: "Mentors", href: "/mentors", icon: Archive },
+  { name: "Check Email", href: "/email", icon: Mail },
   { name: "Roadmap", href: "/roadmap", icon: Archive },
   { name: "Scholarships", href: "/scholarship", icon: GraduationCap },
   { name: "ChatBot", href: "/chatbot", icon: Send },

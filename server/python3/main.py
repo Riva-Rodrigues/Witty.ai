@@ -20,6 +20,8 @@ import logging
 import os
 from typing import List
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
+import random 
 
 
 # Set up logging
@@ -38,6 +40,14 @@ if not ray.is_initialized():
     ray.init(ignore_reinit_error=True)
 
 app = FastAPI(title="AI Multi-Agent Calendar Scheduler with Email Integration")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"]  # Allows all headers
+)
 
 # Define request models
 class ScheduleRequest(BaseModel):
@@ -60,6 +70,8 @@ class SentimentAnalysis(BaseModel):
     confidence: float
     priority: str
     processed_at: datetime
+    subject: str
+    body: str
 
 class Task(BaseModel):
     title: str
@@ -77,7 +89,6 @@ class TaskAnalysis(BaseModel):
 
 
 # API Endpoints
-
 @app.get("/tasks", response_model=List[Task])
 async def get_tasks():
     """Get all tasks extracted from emails."""
@@ -94,11 +105,13 @@ async def get_tasks():
         results = cursor.fetchall()
         conn.close()
         
+        names = ["Tabish Shaikh", "Riva Rodrigues", "Nirmitee Sarode"]
+        
         return [
             Task(
                 title=row[1],
                 project=row[2],
-                assignee=row[3].split(','),
+                assignee=[random.choice(names)],
                 dueDate=row[4],
                 status=row[5],
                 created_at=datetime.fromisoformat(row[6])
@@ -107,8 +120,6 @@ async def get_tasks():
         ]
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-
 
 @app.get("/sentiment/emails", response_model= List[SentimentAnalysis])
 async def get_email_sentiments():
@@ -118,7 +129,7 @@ async def get_email_sentiments():
         cursor = conn.cursor()
         
         cursor.execute('''
-            SELECT msg_id, sentiment, confidence, priority, processed_at 
+            SELECT msg_id, sentiment, confidence, priority, processed_at ,subject,body
             FROM sentiment_analysis 
             ORDER BY processed_at DESC
         ''')
@@ -132,7 +143,10 @@ async def get_email_sentiments():
                 sentiment=row[1],
                 confidence=row[2],
                 priority=row[3],
-                processed_at=datetime.fromisoformat(row[4])
+                processed_at=datetime.fromisoformat(row[4]),
+                subject=row[5],
+                body=row[6]
+
             )
             for row in results
         ]

@@ -9,6 +9,7 @@ import Create from "./pages/Create";
 import CreateForm from "./pages/CreateForm";
 import TextEditor from "./components/TextEditor";
 import { useEffect } from "react";
+import Email from "./pages/Email";
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/create" element={<Create />} />
                 <Route path="/create/:category" element={<CreateForm />} />
                 <Route path="/create/:category/text-editor" element={<TextEditor />} />
+                <Route path="/email" element={<Email />} />
             </Route>
         </Routes>
     );

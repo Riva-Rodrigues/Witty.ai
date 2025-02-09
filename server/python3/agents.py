@@ -722,6 +722,8 @@ def process_email(service, msg_id):
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS sentiment_analysis (
                 msg_id TEXT PRIMARY KEY,
+                subject TEXT,
+                body TEXT,
                 sentiment TEXT,
                 confidence REAL,
                 priority TEXT,
@@ -765,10 +767,10 @@ def process_email(service, msg_id):
         sentiment_result = analyze_email_sentiment(body)
         if sentiment_result:
             cursor.execute('''
-                INSERT INTO sentiment_analysis (msg_id, sentiment, confidence, priority)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO sentiment_analysis (msg_id, sentiment, confidence, priority,subject,body)
+                VALUES (?, ?, ?, ?, ?, ?)
             ''', (msg_id, sentiment_result['sentiment'], sentiment_result['confidence'], 
-                 sentiment_result['priority']))
+                 sentiment_result['priority'],subject, body))
         
         print("reached tasks")
 
@@ -817,7 +819,7 @@ def create_event(creds, title, date, time, attendees):
         error_content = error.content.decode() if hasattr(error, 'content') else str(error)
         logger.error(f"An error occurred while creating the event: {error_content}")
         return f"Failed to create the event in Google Calendar. Error: {error_content}"
-
+        
 def analyze_email_for_tasks(email_body: str, msg_id: str) -> List[dict]:
     """Analyze email content using OpenAI to extract tasks."""
     try:
@@ -841,6 +843,8 @@ def analyze_email_for_tasks(email_body: str, msg_id: str) -> List[dict]:
         - Use "General" for project if not specified
         - Each task must have all required fields
         - Return ONLY the JSON array, no other text
+        - If there is no due date, use the date after 2 weeks from today
+        - In assignee add one of the names in the email as the assignee
 
         Email Content:
         {email_body}
@@ -871,11 +875,14 @@ def analyze_email_for_tasks(email_body: str, msg_id: str) -> List[dict]:
             return []
             
         valid_tasks = []
+        assignees = ["Tabish Shaikh", "Riva Rodrigues", "Nirmitee Sarode"]
         for task in tasks:
             if all(key in task for key in ["title", "project", "assignee", "dueDate", "status"]):
                 # Ensure assignee is a list
                 if isinstance(task["assignee"], str):
                     task["assignee"] = [task["assignee"]]
+                # Assign one of the predefined names
+                task["assignee"] = [assignees[0]]
                 valid_tasks.append(task)
             else:
                 logger.warning(f"Skipping invalid task structure: {task}")

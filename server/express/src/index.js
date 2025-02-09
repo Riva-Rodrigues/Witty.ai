@@ -375,74 +375,92 @@ router.get('/notion/today-items', async (req, res) => {
 
 // Endpoint to generate a daily report
 router.get('/generate-report', async (req, res) => {
-    try {
+  try {
       // Fetch tasks from the local API
       const tasksResponse = await axios.get('http://localhost:3000/api/tasks');
       const tasks = tasksResponse.data;
-  
+
       // Prepare the context for OpenAI
       const context = JSON.stringify(tasks, null, 2);
-  
-      // Construct the prompt
-      const prompt = `Based on the following tasks data:
-  ${context}
-  
-  Generate a structured, paragraph-wise daily report in a Notion-friendly format. The report should:
-  1. Start with a high-level summary of key updates
-  2. Categorize tasks by project
-  3. Highlight progress made today
-  4. Outline next steps and priorities
-  5. Use Notion-compatible markdown formatting
-  
-  Format the report with clear headings, bullet points where appropriate, and ensure it's well-structured and easy to read in markdown language which is recognised by react-markdown.`;
-  
-      // Call OpenAI API
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: "You are a professional project manager who writes clear, concise, and well-structured daily reports."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 1500
+
+      // Construct the prompt for report generation
+      const reportPrompt = `Based on the following tasks data:
+${context}
+
+Generate a structured, paragraph-wise daily report in a Notion-friendly format. Don't display Task id. The report should:
+1. Start with a high-level summary of key updates
+2. Categorize tasks by project
+3. Highlight progress made today
+4. Outline next steps and priorities
+5. Use Notion-compatible markdown formatting and give in tabular format in markdown 
+
+Format the report with clear headings, bullet points where appropriate, and ensure it's well-structured and easy to read in markdown language which is recognised by react-markdown.`;
+
+      // Call OpenAI API to generate report
+      const reportCompletion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+              { role: "system", content: "You are a professional project manager who writes clear, concise, and well-structured daily reports." },
+              { role: "user", content: reportPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 1500
       });
-  
-      // Transform the response if needed
-      const report = completion.choices[0].message.content;
-  
+
+      const report = reportCompletion.choices[0].message.content;
+
+      // Construct the prompt for personalized productivity suggestions
+      const suggestionPrompt = `Based on the following daily report:
+${report}
+
+Analyze this report and generate personalized productivity suggestions. The suggestions should:
+1. Identify key areas for improvement.
+2. Recommend time management techniques, workflow optimizations, or focus areas.
+3. Provide actionable steps to enhance overall productivity.
+4. Present the suggestions in markdown format in a structured tabular and easy to read manner, making them easy to read in Notion.`;
+
+      // Call OpenAI API to generate productivity suggestions
+      const suggestionCompletion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+              { role: "system", content: "You are a productivity coach who provides actionable and structured improvement suggestions." },
+              { role: "user", content: suggestionPrompt }
+          ],
+          temperature: 0.7,
+          max_tokens: 1000
+      });
+
+      const suggestions = suggestionCompletion.choices[0].message.content;
+
       // Structure the final response
       res.json({
-        success: true,
-        data: {
-          timestamp: new Date().toISOString(),
-          report: report,
-          metadata: {
-            tasksAnalyzed: tasks.length,
-            reportLength: report.length,
-            generatedBy: 'OpenAI GPT-4',
+          success: true,
+          data: {
+              timestamp: new Date().toISOString(),
+              report: report,
+              productivitySuggestions: suggestions,
+              metadata: {
+                  tasksAnalyzed: tasks.length,
+                  reportLength: report.length,
+                  generatedBy: 'OpenAI GPT-4',
+              }
           }
-        }
       });
-  
-    } catch (error) {
+
+  } catch (error) {
       console.error('Error generating report:', error);
-      
+
       const errorMessage = error.response?.data?.error || error.message || 'Unknown error occurred';
       const statusCode = error.response?.status || 500;
-      
+
       res.status(statusCode).json({
-        success: false,
-        error: errorMessage,
-        code: error.code || 'REPORT_GENERATION_ERROR'
+          success: false,
+          error: errorMessage,
+          code: error.code || 'REPORT_GENERATION_ERROR'
       });
-    }
+  }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

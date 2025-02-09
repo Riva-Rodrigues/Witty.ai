@@ -45,6 +45,11 @@ export default function Tasks() {
     const [generatedTasks, setGeneratedTasks] = useState([])
     const [teamMembers, setTeamMembers] = useState([])
     const [prompt, setPrompt] = useState('')
+    const [report, setReport] = useState('')
+    const [productivity, setProductivity] = useState('')
+
+    const [isLoadingReport, setIsLoadingReport] = useState(false)
+
     
     // Loading states
     const [isTasksLoading, setIsTasksLoading] = useState(false)
@@ -128,6 +133,25 @@ export default function Tasks() {
             setIsConfirmingTasks(false)
         }
     }
+
+    
+    const fetchReport = async () => {
+        setIsLoadingReport(true);
+        try {
+            const response = await axios.get('http://localhost:3000/api/generate-report');
+            setReport(response.data.data.report);
+            setProductivity(response.data.data.productivitySuggestions);
+        } catch (error) {
+            console.error('Error fetching report:', error);
+        } finally {
+            setIsLoadingReport(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchReport();
+    }, []);
+
 
     return (
         <div className="container mx-auto p-4 space-y-8">
@@ -216,7 +240,17 @@ export default function Tasks() {
                     </div>
                 </div>
             )}
-            <MarkdownComponent />
+
+            <h2 className="text-2xl font-semibold">Daily Report</h2>
+            {isLoadingReport ? (
+                <p>Loading report...</p>
+            ) : (
+                <MarkdownComponent markdownText={report} />
+                
+            )}
+
+            <h2 className="text-2xl font-semibold">Productivity Suggestions</h2>
+            <MarkdownComponent markdownText={productivity} />
         </div>
     )
 }
