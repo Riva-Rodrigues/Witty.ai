@@ -60,6 +60,8 @@ class SentimentAnalysis(BaseModel):
     confidence: float
     priority: str
     processed_at: datetime
+    subject: str
+    body: str
 
 class Task(BaseModel):
     title: str
@@ -118,7 +120,7 @@ async def get_email_sentiments():
         cursor = conn.cursor()
         
         cursor.execute('''
-            SELECT msg_id, sentiment, confidence, priority, processed_at 
+            SELECT msg_id, sentiment, confidence, priority, processed_at ,subject,body
             FROM sentiment_analysis 
             ORDER BY processed_at DESC
         ''')
@@ -132,7 +134,10 @@ async def get_email_sentiments():
                 sentiment=row[1],
                 confidence=row[2],
                 priority=row[3],
-                processed_at=datetime.fromisoformat(row[4])
+                processed_at=datetime.fromisoformat(row[4]),
+                subject=row[5],
+                body=row[6]
+
             )
             for row in results
         ]

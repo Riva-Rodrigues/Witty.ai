@@ -722,6 +722,8 @@ def process_email(service, msg_id):
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS sentiment_analysis (
                 msg_id TEXT PRIMARY KEY,
+                subject TEXT,
+                body TEXT,
                 sentiment TEXT,
                 confidence REAL,
                 priority TEXT,
@@ -765,10 +767,10 @@ def process_email(service, msg_id):
         sentiment_result = analyze_email_sentiment(body)
         if sentiment_result:
             cursor.execute('''
-                INSERT INTO sentiment_analysis (msg_id, sentiment, confidence, priority)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO sentiment_analysis (msg_id, sentiment, confidence, priority,subject,body)
+                VALUES (?, ?, ?, ?, ?, ?)
             ''', (msg_id, sentiment_result['sentiment'], sentiment_result['confidence'], 
-                 sentiment_result['priority']))
+                 sentiment_result['priority'],subject, body))
         
         print("reached tasks")
 
