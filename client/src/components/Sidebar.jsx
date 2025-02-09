@@ -31,8 +31,8 @@ export default function Sidebar() {
           key={item.href}
           to={item.href}
           className={cn(
-            "flex items-center gap-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground",
-            location && location.pathname.includes(item.href) && "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700"
+            "flex items-center gap-2 text-sm font-medium transition-colors hover:bg-[#E4E0E1] hover:text-[#AB886D] text-muted-foreground",
+            location && location.pathname.includes(item.href) && "text-[#493628] bg-[#DCC0B3] hover:bg-[#F5F5DC] hover:text-[#2E1503]"
           )}
           onClick={onClick}
         >
@@ -42,7 +42,7 @@ export default function Sidebar() {
           </div>
           <div
             className={cn(
-              "ml-auto opacity-0 border-r-2 border-sky-700 h-11 transition-all",
+              "ml-auto opacity-0 border-r-2 border-[#493628] h-11 transition-all",
               location && location.pathname.includes(item.href) && "opacity-100"
             )}
           />

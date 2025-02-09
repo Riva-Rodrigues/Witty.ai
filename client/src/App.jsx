@@ -9,7 +9,13 @@ import Create from "./pages/Create";
 import CreateForm from "./pages/CreateForm";
 import TextEditor from "./components/TextEditor";
 import { useEffect } from "react";
+<<<<<<< Updated upstream
 import Email from "./pages/Email";
+=======
+import VideoCall from "./pages/VideoCall";
+import VideoReview from "./pages/VideoReview";
+import Calender from "./pages/Calender";
+>>>>>>> Stashed changes
 
 const App = () => {
     return (
@@ -27,7 +33,13 @@ const App = () => {
                 <Route path="/create" element={<Create />} />
                 <Route path="/create/:category" element={<CreateForm />} />
                 <Route path="/create/:category/text-editor" element={<TextEditor />} />
+<<<<<<< Updated upstream
                 <Route path="/email" element={<Email />} />
+=======
+                <Route path="/video-meet" element={<VideoCall />} />
+                <Route path="/video-review" element={<VideoReview />} /> 
+                <Route path="/calendar" element={<Calender />} />
+>>>>>>> Stashed changes
             </Route>
         </Routes>
     );

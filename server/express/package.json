@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon -r dotenv/config ./src/index.js",
+    "dev2": "nodemon -r dotenv/config ./src/index2.js",
     "start": "node ./src/index.js"
   },
   "keywords": [],
