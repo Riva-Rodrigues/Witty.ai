@@ -279,29 +279,6 @@ cd server/python2 && streamlit run app.py --server.port 8501
 - **Google Workspace**: Calendar, Gmail, and Drive integration
 - **Multi-Modal AI**: Text, voice, and video processing
 - **Real-Time Synchronization**: Live updates across all platform components
+  
+Witty.ai represents the next evolution in AI-powered productivity platforms, seamlessly integrating multiple intelligent agents to create a unified workspace that adapts to your team's unique workflow. By combining advanced language models, computer vision, and natural language processing, the platform eliminates the friction between different productivity tools and transforms how teams collaborate, communicate, and execute projects.
 
-### Security & Privacy
-- **OAuth 2.0**: Secure Google service authentication
-- **Data Encryption**: Secure storage of sensitive information
-- **Privacy Controls**: User data protection and access controls
-- **Audit Logging**: Comprehensive activity tracking
-
-## 📊 Performance Metrics
-
-- **Real-Time Processing**: < 2 second response times for AI interactions
-- **High Availability**: 99.9% uptime for core services
-- **Scalable Architecture**: Distributed computing with Ray framework
-- **Efficient Storage**: Optimized database queries and caching
-
-## 🎨 Design Philosophy
-
-This platform embodies the principles of intelligent automation, where AI agents work collaboratively to reduce manual overhead while maintaining human oversight and control. The design emphasizes:
-
-- **Seamless Integration**: All components work together as a unified ecosystem
-- **User-Centric Design**: Intuitive interfaces that enhance rather than complicate workflows
-- **AI Augmentation**: Technology amplifies human capabilities rather than replacing them
-- **Contextual Intelligence**: AI understands user context and provides relevant assistance
-
----
-
-**Caffeine.js** represents the next generation of productivity platforms, where AI agents collaborate to create a seamless, intelligent workspace that adapts to user needs and enhances productivity across all business operations.
